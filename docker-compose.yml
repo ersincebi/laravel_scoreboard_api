@@ -3,8 +3,8 @@ networks:
   laravel:
 
 services:
-  web:
-    build: ./.docker/web
+  nginx:
+    build: ./.docker/nginx
     restart: always
     container_name: laravel_app_nginx
     ports:
