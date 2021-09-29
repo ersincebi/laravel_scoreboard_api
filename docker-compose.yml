@@ -20,7 +20,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - "./.docker/database:/var/lib/mysql"
+      - "./.docker/mysql:/var/lib/mysql"
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     tty: true
