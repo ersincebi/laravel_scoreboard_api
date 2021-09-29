@@ -19,20 +19,17 @@ class ScoreboardController extends Controller{
 	*/
 	public function show(int $game_id){
 
-		$games = Scoreboard::select('user_id','score')
-							->where('game_id', $game_id)
-							->orderBy('score')
-							->skip(0)
-							->take(25)
-							->get();
+		$games = $this->get_collection($game_id)
+						->skip(0)
+						->take(25)
+						->get();
 
 		$ranks = 0;
 		foreach($games as $game) $game->ranks = $ranks++;
 
 		return response(
 			[
-				'games' => ScoreboardResource::collection($games),
-				'message' => 'Retrieved successfully'
+				'out' => ScoreboardResource::collection($games)
 			],
 			200
 		);
@@ -68,41 +65,52 @@ class ScoreboardController extends Controller{
 		// else
 		// here we find the old rank of the user
 		//SELECT ROW_NUMBER() OVER (ORDER BY SomeField) AS Row, * FROM SomeTable
-		$scoreboardCollection = $this->get_collection($request->game_id);
-		$old_rank = $this->findRank($scoreboardCollection, (int) $request->user_id);
+		$old_rank = $this->findRank(
+					$this->get_collection(
+						$request->game_id
+						)->get(),
+					(int) $request->user_id
+				);
 
-		// {old_rank: ”, new_rank: "”, sweep: [1,2,3,4,5]}
 		$scoreboard = Scoreboard::create($data);
 
 		// getting the new rank
-		$scoreboardCollection = $this->get_collection($request->game_id);
-		$new_rank = $this->findRank($scoreboardCollection, (int) $request->user_id);
+		$new_rank = $this->findRank(
+			$this->get_collection(
+				$request->game_id
+				)->get(),
+			(int) $request->user_id
+		);
 
 
 		//finding the sweeps
-
+		$sweep = $this->get_collection(
+					$request->game_id
+					)->skip($new_rank)
+					->take($old_rank)
+					->get();
 
 		return response(
 				[
-					'score' => collect([
-						'old_rank' => $old_rank,
-						'new_rank' => $new_rank,
+					'out' => collect([
+						'old_rank' => (int) $old_rank,
+						'new_rank' => (int) $new_rank,
 						'sweep' => $sweep,
-					]),
-					'message' => 'Created successfully'
+					])
 				],
 				201
 			);
 	}
 
 	/**
+	 * finds the scoreboard results for given game_id
 	 * 
+	 * @return Scoreboard collection
 	 */
 	private function get_collection(int $game_id){
 		return Scoreboard::select('user_id','score')
 							->where('game_id', $game_id)
-							->orderBy('score')
-							->get();
+							->orderBy('score');
 	}
 
 	/**

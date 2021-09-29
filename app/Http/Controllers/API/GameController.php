@@ -26,8 +26,7 @@ class GameController extends Controller{
 
 		return response(
 			[
-				'out' => GamesResource::collection($games),
-				'message' => 'Retrieved successfully'
+				'out' => GamesResource::collection($games)
 			],
 			200
 		);
