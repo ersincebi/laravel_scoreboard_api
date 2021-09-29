@@ -29,5 +29,5 @@ The routes available are:
 |--------|--------------------|-------------------------------------------------|------------------------------------------------------------------------------------------------|
 | `GET`  | `/api/get_games`                                         |                                                 | Retrieves all games                                      |
 | `GET`  | `/api/get_scoreboard/{game_id}`                          | Numeric Id                                      | Retrieves scorese that made on that ggame                |
-| `POST` | `/api/add_score/{game_id}/{user_id}/{score}`             | `quantity`,`address`,`shippingDate`,`orderCode` | Adds a new score                                         |
+| `POST` | `/api/add_score/{game_id}/{user_id}/{score}`             | {game_id}/{user_id}/{score}                     | Adds a new score                                         |
 
