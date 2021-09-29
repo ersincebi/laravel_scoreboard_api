@@ -17,7 +17,7 @@ Implementation of an API application using the Laravel Framework [https://larave
 - composer
 ### Usage
 
-- The postman collaction file is inside main directory of the project
+- You may use the the postman collaction file that inside the main directory of the project
 - The base will be `http://localhost:8081` or `http://127.0.0.1:8000`
 
 
