@@ -14,10 +14,11 @@ class ScoreboardSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('games')->insert([
-            'user_id' => rand(10),
-            'game_id' => rand(10),
-            'score' => rand(0, 100) / 10, // for making floating point
-        ]);
+		for($i=0;$i<100;$i++)
+			DB::table('scoreboards')->insert([
+				'user_id' => rand(1, 10),
+				'game_id' => rand(1, 10),
+				'score' => rand(0, 100) / 10, // for making floating point
+			]);
     }
 }

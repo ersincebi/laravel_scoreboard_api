@@ -14,8 +14,6 @@ class CreateScoreboardsTable extends Migration
 	public function up()
 	{
 		Schema::create('scoreboards', function (Blueprint $table) {
-			$table->id();
-
 			$table->foreignId('user_id')
 				->nullable()
 				->constrained()

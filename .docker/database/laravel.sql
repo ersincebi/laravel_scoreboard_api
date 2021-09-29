@@ -45,6 +45,32 @@ LOCK TABLES `failed_jobs` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `games`
+--
+
+DROP TABLE IF EXISTS `games`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `games` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `games`
+--
+
+LOCK TABLES `games` WRITE;
+/*!40000 ALTER TABLE `games` DISABLE KEYS */;
+INSERT INTO `games` VALUES (1,'Mr. Candelario Rau','2021-09-29 16:20:58','2021-09-29 16:20:58'),(2,'Savion Bergstrom PhD','2021-09-29 16:20:58','2021-09-29 16:20:58'),(3,'Brett Franecki','2021-09-29 16:20:58','2021-09-29 16:20:58'),(4,'Roscoe Nolan','2021-09-29 16:20:58','2021-09-29 16:20:58'),(5,'Duane Hermiston','2021-09-29 16:20:58','2021-09-29 16:20:58'),(6,'Kayla Green','2021-09-29 16:20:58','2021-09-29 16:20:58'),(7,'Newell Leuschke MD','2021-09-29 16:20:58','2021-09-29 16:20:58'),(8,'Yadira Larkin V','2021-09-29 16:20:58','2021-09-29 16:20:58'),(9,'Newell Harber','2021-09-29 16:20:58','2021-09-29 16:20:58'),(10,'Gudrun Osinski','2021-09-29 16:20:58','2021-09-29 16:20:58');
+/*!40000 ALTER TABLE `games` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -56,7 +82,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +91,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_resets_table',1),(3,'2016_06_01_000001_create_oauth_auth_codes_table',1),(4,'2016_06_01_000002_create_oauth_access_tokens_table',1),(5,'2016_06_01_000003_create_oauth_refresh_tokens_table',1),(6,'2016_06_01_000004_create_oauth_clients_table',1),(7,'2016_06_01_000005_create_oauth_personal_access_clients_table',1),(8,'2019_08_19_000000_create_failed_jobs_table',1),(9,'2019_12_14_000001_create_personal_access_tokens_table',1);
+INSERT INTO `migrations` VALUES (43,'2014_10_12_000000_create_users_table',1),(44,'2014_10_12_100000_create_password_resets_table',1),(45,'2016_06_01_000001_create_oauth_auth_codes_table',1),(46,'2016_06_01_000002_create_oauth_access_tokens_table',1),(47,'2016_06_01_000003_create_oauth_refresh_tokens_table',1),(48,'2016_06_01_000004_create_oauth_clients_table',1),(49,'2016_06_01_000005_create_oauth_personal_access_clients_table',1),(50,'2019_08_19_000000_create_failed_jobs_table',1),(51,'2019_12_14_000001_create_personal_access_tokens_table',1),(52,'2021_09_29_112122_create_games_table',1),(53,'2021_09_29_112134_create_scoreboards_table',1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,6 +295,36 @@ LOCK TABLES `personal_access_tokens` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `scoreboards`
+--
+
+DROP TABLE IF EXISTS `scoreboards`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `scoreboards` (
+  `user_id` bigint unsigned DEFAULT NULL,
+  `game_id` bigint unsigned DEFAULT NULL,
+  `score` double(8,2) NOT NULL DEFAULT '0.00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  KEY `scoreboards_user_id_foreign` (`user_id`),
+  KEY `scoreboards_game_id_foreign` (`game_id`),
+  CONSTRAINT `scoreboards_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `scoreboards_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `scoreboards`
+--
+
+LOCK TABLES `scoreboards` WRITE;
+/*!40000 ALTER TABLE `scoreboards` DISABLE KEYS */;
+INSERT INTO `scoreboards` VALUES (7,7,0.90,NULL,NULL),(5,6,3.50,NULL,NULL),(1,10,6.50,NULL,NULL),(9,8,0.90,NULL,NULL),(7,4,1.10,NULL,NULL),(1,6,0.60,NULL,NULL),(1,3,5.40,NULL,NULL),(8,3,1.60,NULL,NULL),(6,10,4.70,NULL,NULL),(7,10,0.00,NULL,NULL),(8,6,0.40,NULL,NULL),(7,8,8.00,NULL,NULL),(10,10,1.70,NULL,NULL),(7,7,9.00,NULL,NULL),(3,4,0.50,NULL,NULL),(7,7,0.60,NULL,NULL),(5,3,2.80,NULL,NULL),(8,4,9.30,NULL,NULL),(7,3,9.10,NULL,NULL),(8,9,2.00,NULL,NULL),(3,4,9.10,NULL,NULL),(5,4,3.90,NULL,NULL),(4,4,5.90,NULL,NULL),(2,4,0.50,NULL,NULL),(4,6,4.10,NULL,NULL),(3,1,2.10,NULL,NULL),(2,6,9.30,NULL,NULL),(2,8,1.60,NULL,NULL),(6,8,8.80,NULL,NULL),(10,4,7.60,NULL,NULL),(3,10,4.30,NULL,NULL),(2,1,8.80,NULL,NULL),(6,6,0.80,NULL,NULL),(4,4,3.20,NULL,NULL),(6,9,5.50,NULL,NULL),(8,3,8.80,NULL,NULL),(3,6,1.20,NULL,NULL),(3,5,3.10,NULL,NULL),(1,1,3.10,NULL,NULL),(8,10,9.20,NULL,NULL),(4,2,8.70,NULL,NULL),(3,1,1.70,NULL,NULL),(10,10,8.40,NULL,NULL),(10,9,2.30,NULL,NULL),(6,8,2.80,NULL,NULL),(2,6,1.70,NULL,NULL),(4,5,5.70,NULL,NULL),(4,1,8.80,NULL,NULL),(9,10,1.90,NULL,NULL),(7,1,4.70,NULL,NULL),(6,5,3.00,NULL,NULL),(3,10,1.30,NULL,NULL),(6,4,1.70,NULL,NULL),(9,1,0.00,NULL,NULL),(4,6,4.70,NULL,NULL),(4,2,4.60,NULL,NULL),(2,3,6.30,NULL,NULL),(9,2,2.70,NULL,NULL),(3,8,6.70,NULL,NULL),(4,10,9.60,NULL,NULL),(8,10,9.30,NULL,NULL),(1,5,8.80,NULL,NULL),(8,8,1.20,NULL,NULL),(10,1,8.70,NULL,NULL),(10,9,2.40,NULL,NULL),(9,5,8.20,NULL,NULL),(8,1,0.10,NULL,NULL),(8,8,0.90,NULL,NULL),(9,6,1.50,NULL,NULL),(6,6,9.50,NULL,NULL),(10,10,6.80,NULL,NULL),(10,3,6.20,NULL,NULL),(1,8,0.00,NULL,NULL),(8,3,9.00,NULL,NULL),(4,10,5.90,NULL,NULL),(9,4,3.10,NULL,NULL),(7,7,5.60,NULL,NULL),(4,3,0.10,NULL,NULL),(6,10,7.70,NULL,NULL),(9,5,6.40,NULL,NULL),(6,1,0.00,NULL,NULL),(6,10,7.50,NULL,NULL),(7,3,3.40,NULL,NULL),(8,5,4.70,NULL,NULL),(7,2,5.70,NULL,NULL),(10,2,4.00,NULL,NULL),(8,1,6.50,NULL,NULL),(7,8,1.10,NULL,NULL),(3,10,2.20,NULL,NULL),(2,8,8.10,NULL,NULL),(10,9,9.80,NULL,NULL),(10,3,1.30,NULL,NULL),(5,2,5.90,NULL,NULL),(7,9,5.30,NULL,NULL),(5,6,7.50,NULL,NULL),(9,3,1.60,NULL,NULL),(1,8,9.80,NULL,NULL),(7,4,7.40,NULL,NULL),(2,7,7.90,NULL,NULL),(6,1,3.80,NULL,NULL),(5,8,1.10,NULL,NULL);
+/*!40000 ALTER TABLE `scoreboards` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -278,15 +334,11 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -295,6 +347,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Wallace Hintz','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','2021-09-29 16:21:04','2021-09-29 16:21:04'),(2,'Dr. Tristian Krajcik Sr.','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','2021-09-29 16:21:04','2021-09-29 16:21:04'),(3,'Kayden Kerluke','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','2021-09-29 16:21:04','2021-09-29 16:21:04'),(4,'Andy Sawayn DDS','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','2021-09-29 16:21:04','2021-09-29 16:21:04'),(5,'Mrs. Malika Koepp','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','2021-09-29 16:21:04','2021-09-29 16:21:04'),(6,'Jazmyn Jakubowski','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','2021-09-29 16:21:04','2021-09-29 16:21:04'),(7,'Axel Balistreri DDS','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','2021-09-29 16:21:04','2021-09-29 16:21:04'),(8,'Nash Marvin','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','2021-09-29 16:21:04','2021-09-29 16:21:04'),(9,'Yadira Erdman IV','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','2021-09-29 16:21:04','2021-09-29 16:21:04'),(10,'Otha Dicki I','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','2021-09-29 16:21:04','2021-09-29 16:21:04');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -307,4 +360,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-09-29 11:06:05
+-- Dump completed on 2021-09-29 16:23:20

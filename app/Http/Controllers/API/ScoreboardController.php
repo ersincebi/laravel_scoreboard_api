@@ -76,19 +76,18 @@ class ScoreboardController extends Controller{
 
 		// getting the new rank
 		$new_rank = $this->findRank(
-			$this->get_collection(
-				$request->game_id
-				)->get(),
-			(int) $request->user_id
-		);
+			$this->get_collection($request->game_id)
+					->get(),
+					(int) $request->user_id
+				);
 
 
 		//finding the sweeps
-		$sweep = $this->get_collection(
-					$request->game_id
-					)->skip($new_rank)
-					->take($old_rank)
-					->get();
+		$sweep = $this->get_collection($request->game_id)
+						->skip($new_rank)
+						->take($old_rank)
+						->select('user_id')
+						->get();
 
 		return response(
 				[
